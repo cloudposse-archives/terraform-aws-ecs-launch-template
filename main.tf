@@ -60,6 +60,10 @@ resource "aws_launch_template" "default" {
 
   instance_market_options {
     market_type = "spot"
+
+    # spot_options {
+    #   spot_instance_type = "one-time"
+    # }
   }
 
   #vpc_security_group_ids = ["${local.security_groups}"]

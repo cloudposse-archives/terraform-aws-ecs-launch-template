@@ -20,6 +20,11 @@ variable "delimiter" {
   default = "-"
 }
 
+variable "autoscaling_group_name" {
+  description = "An autoscaling group name to track, and automatically drain ECS Containers from when scaling down"
+  default     = ""
+}
+
 variable "sns_topic_arn" {
   description = "An SNS topic ARN that has already been created. Its policy must already allow access from CloudWatch Alarms, or set `add_sns_policy` to `true`"
   default     = ""

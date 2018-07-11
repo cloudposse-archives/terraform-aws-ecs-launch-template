@@ -43,22 +43,22 @@ data "aws_iam_policy_document" "sns_topic_policy" {
 
     condition {
       test     = "StringEquals"
-      variable = "AWS:SourceOwner"
+      variable = "AWS:SourceAccount"
 
       values = [
-        "arn:aws:iam::${data.aws_caller_identity.default.account_id}:root",
+        "${data.aws_caller_identity.default.account_id}",
       ]
     }
   }
 
   statement {
-    sid       = "Allow ${module.label.id} spot fleet CloudwatchEvents"
+    sid       = "Allow ${module.label.id} ECS instances to manage the SNS topic"
     actions   = ["sns:Publish"]
     resources = ["${local.sns_topic_arn}"]
 
     principals {
       type        = "Service"
-      identifiers = ["events.amazonaws.com"]
+      identifiers = ["events.amazonaws.com", "autoscaling.amazonaws.com"]
     }
   }
 }

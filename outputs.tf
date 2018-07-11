@@ -5,6 +5,9 @@
 # output "request_id" {
 #   value = "${aws_spot_fleet_request.default.id}"
 # }
+output "security_group_id" {
+  value = "${aws_security_group.default.id}"
+}
 
 output "cluster_name" {
   value = "${local.cluster_name}"

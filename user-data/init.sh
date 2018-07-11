@@ -30,19 +30,19 @@ log_stream_name = %ECS_CLUSTER/%CONTAINER_INSTANCE/var/log/docker
 datetime_format = %Y-%m-%dT%H:%M:%S.%f
 initial_position = start_of_file
 [/var/log/ecs/ecs-init.log]
-file = /var/log/ecs/ecs-init.log.*
+file = /var/log/ecs/ecs-init.log*
 log_group_name = ${logsgroup}
 log_stream_name = %ECS_CLUSTER/%CONTAINER_INSTANCE/var/log/ecs/ecs-init.log
 datetime_format = %Y-%m-%dT%H:%M:%SZ
 initial_position = start_of_file
 [/var/log/ecs/ecs-agent.log]
-file = /var/log/ecs/ecs-agent.log.*
+file = /var/log/ecs/ecs-agent.log*
 log_group_name = ${logsgroup}
 log_stream_name = %ECS_CLUSTER/%CONTAINER_INSTANCE/var/log/ecs/ecs-agent.log
 datetime_format = %Y-%m-%dT%H:%M:%SZ
 initial_position = start_of_file
 [/var/log/ecs/audit.log]
-file = /var/log/ecs/audit.log.*
+file = /var/log/ecs/audit.log*
 log_group_name = ${logsgroup}
 log_stream_name = %ECS_CLUSTER/%CONTAINER_INSTANCE/var/log/ecs/audit.log
 datetime_format = %Y-%m-%dT%H:%M:%SZ
