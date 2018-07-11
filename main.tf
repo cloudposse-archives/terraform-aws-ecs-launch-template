@@ -90,6 +90,7 @@ resource "aws_launch_template" "default" {
     subnet_id                   = "${var.subnet_ids[0]}"
     device_index                = "0"
     security_groups             = ["${local.security_groups}"]
+    delete_on_termination       = "true"
   }
 
   # // root partition
