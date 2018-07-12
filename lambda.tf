@@ -5,7 +5,7 @@
 # }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
-  statement_id  = "AllowExecutionFromSNS"
+  statement_id  = "${module.label.id}-AllowExecutionFromSNS"
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.lambda_trigger_asg_draining.function_name}"
   principal     = "sns.amazonaws.com"

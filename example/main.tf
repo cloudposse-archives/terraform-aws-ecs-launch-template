@@ -62,7 +62,7 @@ variable "container_memory" {
 }
 
 variable "container_memoryreservation" {
-  default = "64"
+  default = "500"
 }
 
 variable "container_image" {
