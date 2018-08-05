@@ -67,7 +67,7 @@ resource "aws_launch_template" "default" {
   instance_type = "${var.instance_type}"
   key_name      = "${var.key_name}"
   ebs_optimized = "${var.ebs_optimized}"
-  depends_on    = ["aws_iam_instance_profile.instance_profile"]
+  depends_on    = ["aws_iam_instance_profile.instance_profile", "aws_ecs_cluster.default", "aws_security_group.default"]
   user_data     = "${data.template_cloudinit_config.config.rendered}"
   tags          = "${module.label.tags}"
 
@@ -82,9 +82,9 @@ resource "aws_launch_template" "default" {
   #vpc_security_group_ids = ["${local.security_groups}"]
   #placement_group        = "${var.placement_group}"
 
-  # iam_instance_profile {
-  #   arn = "${local.iam_instance_profile_arn}"
-  # }
+  iam_instance_profile {
+    arn = "${local.iam_instance_profile_arn}"
+  }
   monitoring {
     enabled = "${var.monitoring}"
   }
