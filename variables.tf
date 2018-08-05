@@ -93,7 +93,7 @@ variable "target_capacity" {
 
 variable "instance_type" {
   description = "The default instance type"
-  default     = "m3.large"
+  default     = "m4.large"
 } //"c3.large", "m4.large", "m5.large", "r3.large", "r4.large", "c5.large", "i3.large"
 
 variable "wait_for_fulfillment" {
