@@ -117,7 +117,7 @@ resource "aws_launch_template" "default" {
   lifecycle {
     create_before_destroy = true
   }
-  depends_on = ["aws_iam_instance_profile.instance_profile.arn"]
+  depends_on = ["aws_iam_instance_profile.instance_profile"]
 }
 
 # resource "aws_spot_fleet_request" "default" {
