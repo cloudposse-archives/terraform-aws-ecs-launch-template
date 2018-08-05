@@ -29,6 +29,16 @@ data "aws_ami" "ecs_ami" {
     name   = "name"
     values = ["amzn-ami-*-amazon-ecs-optimized"]
   }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 }
 
 resource "aws_ecs_cluster" "default" {
@@ -57,6 +67,9 @@ resource "aws_launch_template" "default" {
   instance_type = "${var.instance_type}"
   key_name      = "${var.key_name}"
   ebs_optimized = "${var.ebs_optimized}"
+  depends_on    = ["aws_iam_instance_profile.instance_profile"]
+  user_data     = "${data.template_cloudinit_config.config.rendered}"
+  tags          = "${module.label.tags}"
 
   instance_market_options {
     market_type = "spot"
@@ -69,9 +82,9 @@ resource "aws_launch_template" "default" {
   #vpc_security_group_ids = ["${local.security_groups}"]
   #placement_group        = "${var.placement_group}"
 
-  iam_instance_profile {
-    arn = "${local.iam_instance_profile_arn}"
-  }
+  # iam_instance_profile {
+  #   arn = "${local.iam_instance_profile_arn}"
+  # }
   monitoring {
     enabled = "${var.monitoring}"
   }
@@ -83,17 +96,16 @@ resource "aws_launch_template" "default" {
     resource_type = "volume"
     tags          = "${module.label.tags}"
   }
-
   ## Move up
-  # network_interfaces {
-  #   associate_public_ip_address = "${var.associate_public_ip_address}"
-  #   description                 = "${module.label.id}"
-  #   subnet_id                   = "${var.subnet_ids[0]}"
-  #   device_index                = "0"
-  #   security_groups             = ["${local.security_groups}"]
-  #   delete_on_termination       = "true"
-  # }
+  network_interfaces {
+    associate_public_ip_address = "${var.associate_public_ip_address}"
+    description                 = "${module.label.id}"
 
+    # subnet_id                   = "${var.subnet_ids[0]}"
+    device_index          = "0"
+    security_groups       = ["${local.security_groups}"]
+    delete_on_termination = "true"
+  }
 
   # // root partition
   # block_device_mappings {
@@ -114,12 +126,9 @@ resource "aws_launch_template" "default" {
       delete_on_termination = "true"
     }
   }
-  user_data = "${data.template_cloudinit_config.config.rendered}"
-  tags      = "${module.label.tags}"
   lifecycle {
     create_before_destroy = true
   }
-  depends_on = ["aws_iam_instance_profile.instance_profile"]
 }
 
 # resource "aws_spot_fleet_request" "default" {
