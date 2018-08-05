@@ -83,15 +83,17 @@ resource "aws_launch_template" "default" {
     resource_type = "volume"
     tags          = "${module.label.tags}"
   }
+
   ## Move up
-  network_interfaces {
-    associate_public_ip_address = "${var.associate_public_ip_address}"
-    description                 = "${module.label.id}"
-    subnet_id                   = "${var.subnet_ids[0]}"
-    device_index                = "0"
-    security_groups             = ["${local.security_groups}"]
-    delete_on_termination       = "true"
-  }
+  # network_interfaces {
+  #   associate_public_ip_address = "${var.associate_public_ip_address}"
+  #   description                 = "${module.label.id}"
+  #   subnet_id                   = "${var.subnet_ids[0]}"
+  #   device_index                = "0"
+  #   security_groups             = ["${local.security_groups}"]
+  #   delete_on_termination       = "true"
+  # }
+
 
   # // root partition
   # block_device_mappings {
