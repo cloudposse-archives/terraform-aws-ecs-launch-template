@@ -71,13 +71,15 @@ resource "aws_launch_template" "default" {
   user_data     = "${data.template_cloudinit_config.config.rendered}"
   tags          = "${module.label.tags}"
 
-  instance_market_options {
-    market_type = "spot"
+  # instance_market_options {
+  #   market_type = "spot"
 
-    spot_options {
-      spot_instance_type = "one-time"
-    }
-  }
+
+  #   spot_options {
+  #     spot_instance_type = "one-time"
+  #   }
+  # }
+
 
   #vpc_security_group_ids = ["${local.security_groups}"]
   #placement_group        = "${var.placement_group}"
