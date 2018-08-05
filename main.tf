@@ -74,9 +74,9 @@ resource "aws_launch_template" "default" {
   instance_market_options {
     market_type = "spot"
 
-    # spot_options {
-    #   spot_instance_type = "one-time"
-    # }
+    spot_options {
+      spot_instance_type = "one-time"
+    }
   }
 
   #vpc_security_group_ids = ["${local.security_groups}"]
@@ -102,8 +102,9 @@ resource "aws_launch_template" "default" {
     description                 = "${module.label.id}"
 
     # subnet_id                   = "${var.subnet_ids[0]}"
-    device_index          = "0"
-    security_groups       = ["${local.security_groups}"]
+    # device_index          = "0"
+    security_groups = ["${local.security_groups}"]
+
     delete_on_termination = "true"
   }
 
