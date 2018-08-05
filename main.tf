@@ -38,7 +38,7 @@ resource "aws_ecs_cluster" "default" {
 }
 
 locals {
-  cluster_name             = "${var.existing_cluster_name == "" ? "${element(split("/", join("",aws_ecs_cluster.default.*.arn)), 1)}" : var.existing_cluster_name }"
+  cluster_name             = "${var.existing_cluster_name == "" ? "${basename(element(aws_ecs_cluster.default.*.arn, 0))}" : var.existing_cluster_name }"
   iam_instance_profile_arn = "${var.iam_instance_profile_arn == "" ? aws_iam_instance_profile.instance_profile.arn : ""}"
   ami_id                   = "${var.ami_id == "" ? data.aws_ami.ecs_ami.id : var.ami_id}"
   security_groups          = "${concat(var.security_group_ids, list(aws_security_group.default.id))}"
@@ -117,6 +117,7 @@ resource "aws_launch_template" "default" {
   lifecycle {
     create_before_destroy = true
   }
+  depends_on = ["aws_iam_instance_profile.instance_profile.arn"]
 }
 
 # resource "aws_spot_fleet_request" "default" {
