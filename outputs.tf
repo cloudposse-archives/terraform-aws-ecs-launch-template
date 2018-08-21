@@ -25,6 +25,10 @@ output "user_data" {
   value = "${base64decode(data.template_cloudinit_config.config.rendered)}"
 }
 
+output "user_data_base64" {
+  value = "${data.template_cloudinit_config.config.rendered}"
+}
+
 output "iam_instance_profile_arn" {
   value = "${local.iam_instance_profile_arn}"
 }
@@ -39,4 +43,8 @@ output "launch_template_id" {
 
 output "launch_template_version" {
   value = "${aws_launch_template.default.latest_version}"
+}
+
+output "ami_id" {
+  value = "${local.ami_id}"
 }
